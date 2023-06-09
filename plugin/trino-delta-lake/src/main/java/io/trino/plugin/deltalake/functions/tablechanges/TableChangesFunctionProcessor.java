@@ -209,6 +209,7 @@ public class TableChangesFunctionProcessor
                 Optional.empty(),
                 split.path(),
                 split.fileSize(),
-                0L);
+                0L,
+                Optional::empty);
     }
 }
