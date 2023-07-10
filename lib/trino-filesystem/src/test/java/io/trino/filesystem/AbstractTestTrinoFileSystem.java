@@ -819,7 +819,7 @@ public abstract class AbstractTestTrinoFileSystem
         while (fileIterator.hasNext()) {
             FileEntry fileEntry = fileIterator.next();
             Location location = fileEntry.location();
-            assertThat(fileEntry.length()).isEqualTo(location.toString().length());
+            assertThat(fileEntry.length()).isEqualTo("test blob content for ".length() + location.toString().length());
             locations.add(location);
         }
         return locations;
@@ -847,7 +847,7 @@ public abstract class AbstractTestTrinoFileSystem
     private Location createBlob(Closer closer, String path)
     {
         Location location = createLocation(path);
-        closer.register(new TempBlob(location)).createOrOverwrite(location.toString());
+        closer.register(new TempBlob(location)).createOrOverwrite("test blob content for " + location.toString());
         return location;
     }
 
