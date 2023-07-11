@@ -26,8 +26,8 @@ import static java.util.Objects.requireNonNull;
 public class MyPlugin
         implements Plugin
 {
-    private static Plugin delegated;
-    static {
+    private Plugin delegated;
+    {
         ClassLoader myLoader = ...; // use child-fisrt class loader
         delegated = myLoader.load("xxx.MyDelegatedPlugin");
     }
