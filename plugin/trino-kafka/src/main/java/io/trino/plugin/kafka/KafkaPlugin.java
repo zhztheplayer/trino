@@ -23,34 +23,14 @@ import io.trino.spi.connector.ConnectorFactory;
 
 import static java.util.Objects.requireNonNull;
 
-public class KafkaPlugin
+public class MyPlugin
         implements Plugin
 {
-    public static final Module DEFAULT_EXTENSION = new AbstractConfigurationAwareModule()
-    {
-        @Override
-        protected void setup(Binder binder)
-        {
-            install(new KafkaClientsModule());
-            install(new KafkaSecurityModule());
-        }
-    };
-
-    private final Module extension;
-
-    public KafkaPlugin()
-    {
-        this(DEFAULT_EXTENSION);
+    private static Plugin delegated;
+    static {
+        ClassLoader myLoader = ...; // use child-fisrt class loader
+        delegated = myLoader.load("xxx.MyDelegatedPlugin");
     }
-
-    public KafkaPlugin(Module extension)
-    {
-        this.extension = requireNonNull(extension, "extension is null");
-    }
-
-    @Override
-    public synchronized Iterable<ConnectorFactory> getConnectorFactories()
-    {
-        return ImmutableList.of(new KafkaConnectorFactory(extension));
-    }
+    
+   ... // use this.delegated to handle all calls to MyPlugin
 }
